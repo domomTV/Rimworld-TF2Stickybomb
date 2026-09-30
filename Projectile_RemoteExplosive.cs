@@ -120,4 +120,12 @@ public class Projectile_RemoteExplosive : Projectile_Explosive {
 			// GenExplosion.NotifyNearbyPawnsOfDangerousExplosive((Thing) this, this.DamageDef, this.launcher.Faction, this.launcher);
 		}
 	}
+	
+	public override void ExposeData()
+	{
+		base.ExposeData();
+		Scribe_Values.Look<int>(ref this.ticksToFizzle, "ticksToFizzle");
+		Scribe_Values.Look<bool>(ref this.armed, "armed");
+		Scribe_Values.Look<bool>(ref this.primed, "primed");
+	}
 }

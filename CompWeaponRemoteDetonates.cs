@@ -7,7 +7,7 @@ using Verse;
 public class CompWeaponRemoteDetonates : ThingComp {
 	private CompProperties_WeaponRemoteDetonates Props => (CompProperties_WeaponRemoteDetonates)this.props;
 
-	public LinkedList<Projectile_RemoteExplosive> projectiles = new LinkedList<Projectile_RemoteExplosive>();
+	public List<Projectile_RemoteExplosive> projectiles = new List<Projectile_RemoteExplosive>();
 
 	public int MaxProjectiles
 	{
@@ -34,12 +34,12 @@ public class CompWeaponRemoteDetonates : ThingComp {
 		}
 
 		Projectile_RemoteExplosive proj = (Projectile_RemoteExplosive) thing;
-		projectiles.AddLast(proj);
+		projectiles.Add(proj);
 		
 		while (projectiles.Count > MaxProjectiles)
 		{
-			Projectile_RemoteExplosive projToExplode = projectiles.First.Value;
-			projectiles.RemoveFirst();
+			Projectile_RemoteExplosive projToExplode = projectiles[0];
+			projectiles.RemoveAt(0);
 			projToExplode.Fizzle(true);
 		}
 		
@@ -151,5 +151,9 @@ public class CompWeaponRemoteDetonates : ThingComp {
 		}
 
 		return (Ability_RemoteDetonate) a;
+	}
+
+	public override void PostExposeData() {
+		Scribe_Collections.Look<Projectile_RemoteExplosive>(ref this.projectiles, "projectiles", LookMode.Reference);
 	}
 }
