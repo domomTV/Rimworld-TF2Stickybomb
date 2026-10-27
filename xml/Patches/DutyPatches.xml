@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Patch>
+
+	<!-- Should patch all duties that have sapper jobgiver -->
+	<Operation Class="PatchOperationInsert">
+		<xpath>Defs/DutyDef/thinkNode/subNodes/li[@Class="JobGiver_AISapper" or @Class="JobGiver_AIBreaching"]</xpath>
+		<value>
+			<li Class="JobGiver_AIRemoteDetonate" />
+		</value>
+	</Operation>
+</Patch>

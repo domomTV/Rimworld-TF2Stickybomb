@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+
+	<ThingDef ParentName="BaseHumanMakeableGun">
+		<defName>domom_Gun_StickybombLauncher</defName>
+		<label>stickybomb launcher</label>
+		<description>An ancient grenade launcher modified to fire spiked bombs that stick to surfaces. Up to 8 can be active at once, and they must be detonated manually, or else they will harmlesssly fizzle out after 3 minutes.</description>
+		<graphicData>
+			<texPath>Things/Item/Equipment/WeaponRanged/StickybombLauncher</texPath>
+			<graphicClass>Graphic_Single</graphicClass>
+		</graphicData>
+		<soundInteract>Interact_Rifle</soundInteract>
+		<generateCommonality>0.3</generateCommonality>
+		<weaponClasses>
+			<li>RangedHeavy</li>
+		</weaponClasses>
+		<weaponTags>
+			<li>GrenadeDestructive</li>
+			<li>EmpireGrenadeDestructive</li>
+		</weaponTags>
+		<statBases>
+			<WorkToMake>20000</WorkToMake>
+			<Mass>3.4</Mass>
+			<RangedWeapon_Cooldown>1</RangedWeapon_Cooldown>
+		</statBases>
+		<costList>
+			<Steel>40</Steel>
+			<ComponentIndustrial>4</ComponentIndustrial>
+			<Chemfuel>60</Chemfuel>
+		</costList>
+		<recipeMaker>
+			<skillRequirements>
+				<Crafting>4</Crafting>
+			</skillRequirements>
+			<displayPriority>455</displayPriority>
+		</recipeMaker>
+		<verbs>
+			<li>
+				<verbClass>Verb_LaunchProjectile</verbClass>
+				<hasStandardCommand>true</hasStandardCommand>
+				<defaultProjectile>domom_Proj_Stickybomb</defaultProjectile>
+				<warmupTime>1</warmupTime>
+				<range>19.7</range>
+				<forcedMissRadius>1.9</forcedMissRadius>
+				<burstShotCount>1</burstShotCount>
+				<ai_IsBuildingDestroyer>true</ai_IsBuildingDestroyer>
+				<soundCast>Shot_StickybombLauncher</soundCast>
+				<soundCastTail>GunTail_Light</soundCastTail>
+				<muzzleFlashScale>6</muzzleFlashScale>
+				<targetParams>
+					<canTargetLocations>true</canTargetLocations>
+				</targetParams>
+			</li>
+		</verbs>
+		<tools>
+			<li>
+				<label>stock</label>
+				<capacities>
+					<li>Blunt</li>
+				</capacities>
+				<power>9</power>
+				<cooldownTime>2</cooldownTime>
+			</li>
+			<li>
+				<label>barrel</label>
+				<capacities>
+					<li>Blunt</li>
+					<li>Poke</li>
+				</capacities>
+				<power>9</power>
+				<cooldownTime>2</cooldownTime>
+			</li>
+		</tools>
+		<!-- Can't inherit comps because we need to override CompEquippable with CompEquippableAbility -->
+		<!-- If changes are made to the comps of BaseHumanMakeableGun or parents then they will need to be replicated here -->
+		<comps Inherit="False">
+			<li Class="CompProperties_EquippableAbility">
+				<abilityDef>domom_RemoteDetonate</abilityDef>
+			</li>
+			<li Class="CompProperties_Forbiddable"/>
+			<li Class="CompProperties_Styleable"/>
+			<li Class="CompProperties_Biocodable"/>
+			<li>
+				<compClass>CompQuality</compClass>
+			</li>
+			<li Class="CompProperties_Art">
+				<nameMaker>NamerArtWeaponGun</nameMaker>
+				<descriptionMaker>ArtDescription_WeaponGun</descriptionMaker>
+				<minQualityForArtistic>Excellent</minQualityForArtistic>
+			</li>
+			<li Class="CompProperties_WeaponRemoteDetonates">
+				<maxProjectiles>8</maxProjectiles>
+			</li>
+		</comps>
+	</ThingDef>
+	<ThingDef ParentName="BaseFragGrenadeProjectile">
+		<defName>domom_Proj_Stickybomb</defName>
+		<label>stickybomb</label>
+		<thingClass>Projectile_RemoteExplosive</thingClass>
+		<graphicData>
+			<texPath>Things/Projectile/Stickybomb</texPath>
+			<graphicClass>Graphic_Single</graphicClass>
+		</graphicData>
+		<projectile>
+			<speed>30</speed>
+			<arcHeightFactor>1.85</arcHeightFactor>
+			<explosionRadius>1.9</explosionRadius >
+			<damageAmountBase>25</damageAmountBase>
+			<explosionDelay>10800</explosionDelay> <!-- 3 minutes -->
+		</projectile>
+	</ThingDef>
+</Defs>

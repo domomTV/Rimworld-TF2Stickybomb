@@ -1,4 +1,7 @@
-*/
+.idea/
+bin/
+obj/
+Properties/
 *.csproj
 *.sln
 *.user

@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+
+	<AbilityDef>
+		<defName>domom_RemoteDetonate</defName>
+		<label>detonate</label>
+		<description>Remotely detonate all deployed stickybombs that have landed.</description>
+		<abilityClass>Ability_RemoteDetonate</abilityClass>
+		<!-- <displayOrder>-100</displayOrder> -->
+		<displayGizmoWhileUndrafted>true</displayGizmoWhileUndrafted>
+		<disableGizmoWhileUndrafted>true</disableGizmoWhileUndrafted>
+		<iconPath>UI/Abilities/RemoteDetonate</iconPath>
+		<casterMustBeCapableOfViolence>true</casterMustBeCapableOfViolence>
+		<statBases>
+			<Ability_Duration>0</Ability_Duration>
+		</statBases>
+		<warmupStartSound>Det_StickybombLauncher</warmupStartSound>
+		<comps>
+			<li Class="CompProperties_AbilityEffect">
+				<compClass>CompAbilityEffect_RemoteDetonate</compClass>
+			</li>
+		</comps>
+		<verbProperties>
+			<verbClass>Verb_RemoteDetonate</verbClass>
+			<warmupTime>0.5</warmupTime>
+			<range>0</range>
+			<targetable>false</targetable>
+			<targetParams>
+				<canTargetSelf>true</canTargetSelf>
+				<canTargetPawns>false</canTargetPawns>
+			</targetParams>
+		</verbProperties>
+		<aiCanUse>true</aiCanUse>
+		<showCastingProgressBar>true</showCastingProgressBar>
+	</AbilityDef>
+	
+	<!-- <AbilityDef> -->
+		<!-- <defName>domom_ChargeShot</defName> -->
+		<!-- <label>charged shot</label> -->
+		<!-- <description>charge a shot</description> -->
+		<!-- <displayGizmoWhileUndrafted>false</displayGizmoWhileUndrafted> -->
+		<!-- <casterMustBeCapableOfViolence>true</casterMustBeCapableOfViolence> -->
+		<!-- <statBases> -->
+			<!-- <Ability_Duration>0</Ability_Duration> -->
+		<!-- </statBases> -->
+		<!-- <warmupSound>Charge_StickybombLauncher</warmupSound> -->
+		<!-- <verbProperties> -->
+			<!-- <verbClass>Verb_LaunchProjectile</verbClass> -->
+			<!-- <hasStandardCommand>true</hasStandardCommand> -->
+			<!-- <defaultProjectile>domom_Proj_Stickybomb</defaultProjectile> -->
+			<!-- <warmupTime>3</warmupTime> -->
+			<!-- <range>38</range> -->
+			<!-- <forcedMissRadius>1.9</forcedMissRadius> -->
+			<!-- <burstShotCount>1</burstShotCount> -->
+			<!-- <soundCast>Shot_StickybombLauncher</soundCast> -->
+			<!-- <soundCastTail>GunTail_Light</soundCastTail> -->
+			<!-- <muzzleFlashScale>8</muzzleFlashScale> -->
+			<!-- <targetParams> -->
+				<!-- <canTargetLocations>true</canTargetLocations> -->
+			<!-- </targetParams> -->
+		<!-- </verbProperties> -->
+	<!-- </AbilityDef> -->
+</Defs>
