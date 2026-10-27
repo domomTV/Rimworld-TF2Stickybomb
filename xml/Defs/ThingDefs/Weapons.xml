@@ -108,5 +108,10 @@
 			<damageAmountBase>25</damageAmountBase>
 			<explosionDelay>10800</explosionDelay> <!-- 3 minutes -->
 		</projectile>
+		<comps>
+			<li Class="CompProperties_RemoteExplosive">
+				<armDelay>48</armDelay>
+			</li>
+		</comps>
 	</ThingDef>
 </Defs>

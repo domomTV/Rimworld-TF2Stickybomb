@@ -105,7 +105,7 @@ public class Projectile_RemoteExplosive : Projectile_Explosive {
 	}
 	
 	protected override void Impact(Thing hitThing, bool blockedByShield = false) {
-		this.ticksToArmed = 
+		this.ticksToArmed = this.TryGetComp<CompRemoteExplosive>().Props.armDelay;
 		if (blockedByShield || this.def.projectile.explosionDelay == 0)
 		{
 			this.Explode();
