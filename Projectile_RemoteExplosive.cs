@@ -4,29 +4,22 @@ using Verse;
 
 
 public class Projectile_RemoteExplosive : Projectile_Explosive {
-	/// <summary>
-	/// Determines if this projectile will explode or fizzle when Explode() is called.
-	/// </summary>
+	// Determines if this projectile will explode or fizzle when Explode() is called.
 	private bool primed = false;
-	/// <summary>
-	/// Determines if this projectile can be remote detonated.
-	/// </summary>
+	// Determines if this projectile can be remote detonated.
 	public bool armed = false;
-	/// <summary>
-	/// Used instead of ticksToDetonation because its private &amp; I needed to override Impact().
-	/// Defined by "explosionDelay" XML tag.
-	/// </summary>
-	public int ticksToFizzle;
 	
-	/// <summary>
-	/// Sets the projectile to detonate if it is armed.
-	/// </summary>
-	/// <returns>True if detonation succeeded</returns>
+	// Countdown until projectile fizzles. Replaces ticksToDetonation. Defined by "explosionDelay" XML tag.
+	public int ticksToFizzle;
+	// Countdown until projectile can be manually detonated. Starts after landing.
+	public int ticksToArmed;
+	
+	// Sets the projectile to detonate if it is armed.
+	// Returns true if detonation succeeded.
 	public bool RemoteDetonate() {
 		if (!this.armed) 
-		{
 			return false;
-		}
+		
 		this.primed = true;
 		this.Explode();
 		return true;
@@ -34,17 +27,12 @@ public class Projectile_RemoteExplosive : Projectile_Explosive {
 
 	protected override void Explode() {
 		if (!this.armed) 
-		{
 			return;
-		}
+		
 		if (this.primed) 
-		{
 			base.Explode();
-		} 
 		else 
-		{
 			this.Fizzle();
-		}
 	}
 
 	public void Fizzle(bool wasRemoved = false) {
@@ -85,30 +73,39 @@ public class Projectile_RemoteExplosive : Projectile_Explosive {
 	// Public var for other classes
 	public bool Landed => this.landed;
 	
-	// public override Quaternion ExactRotation
-	// {
-	// 	get
-	// 	{
-	// 		Quaternion ret = Quaternion.
-	// 	}
-	// }
-	
 	// ==================================================================
 	// Overriding these to stop pawns from getting notified of explosions
 	// ==================================================================
-	protected override void TickInterval(int delta)
-	{
+	protected override void TickInterval(int delta) {
 		base.TickInterval(delta);
+		this.TickArm(delta);
+		this.TickFizzle(delta);
+	}
+
+	private void TickArm(int delta) {
+		if (this.ticksToArmed <= 0)
+			return;
+		
+		this.ticksToArmed -= delta;
+		if (this.ticksToArmed > 0)
+			return;
+
+		this.armed = true;
+	}
+	
+	private void TickFizzle(int delta) {
 		if (this.ticksToFizzle <= 0)
 			return;
+		
 		this.ticksToFizzle -= delta;
 		if (this.ticksToFizzle > 0)
 			return;
+		
 		this.Fizzle();
 	}
 	
 	protected override void Impact(Thing hitThing, bool blockedByShield = false) {
-		this.armed = true;
+		this.ticksToArmed = 
 		if (blockedByShield || this.def.projectile.explosionDelay == 0)
 		{
 			this.Explode();
@@ -125,6 +122,7 @@ public class Projectile_RemoteExplosive : Projectile_Explosive {
 	{
 		base.ExposeData();
 		Scribe_Values.Look<int>(ref this.ticksToFizzle, "ticksToFizzle");
+		Scribe_Values.Look<int>(ref this.ticksToArmed, "ticksToArmed");
 		Scribe_Values.Look<bool>(ref this.armed, "armed");
 		Scribe_Values.Look<bool>(ref this.primed, "primed");
 	}
