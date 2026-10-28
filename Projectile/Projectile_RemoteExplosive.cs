@@ -89,6 +89,21 @@ public class Projectile_RemoteExplosive : Projectile_Explosive {
 		}
 	}
 
+	private Quaternion cachedRot;
+	private bool isRotated = false;
+	public override Quaternion ExactRotation
+	{
+		get
+		{
+			if (!isRotated)
+			{
+				cachedRot = Random.rotation;
+				isRotated = true;
+			}
+			return cachedRot;
+		}
+	}
+
 	// ==================================================================
 	// Overriding these to stop pawns from getting notified of explosions
 	// ==================================================================
