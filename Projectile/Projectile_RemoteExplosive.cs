@@ -73,6 +73,22 @@ public class Projectile_RemoteExplosive : Projectile_Explosive {
 	// Public var for other classes
 	public bool Landed => this.landed;
 	
+	private Graphic graphicCached = null;
+	private bool cachedWasArmed = false;
+	public override Graphic Graphic {
+		get {
+			if (this.graphicCached == null || cachedWasArmed != armed)
+			{
+				Graphic baseGraphic = base.Graphic;
+				Color c = this.armed ? Color.white : Color.gray;
+				cachedWasArmed = armed;
+				this.graphicCached = baseGraphic.GetColoredVersion(baseGraphic.Shader, c, baseGraphic.ColorTwo);
+			}
+
+			return this.graphicCached;
+		}
+	}
+
 	// ==================================================================
 	// Overriding these to stop pawns from getting notified of explosions
 	// ==================================================================

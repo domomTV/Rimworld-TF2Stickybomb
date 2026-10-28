@@ -107,6 +107,7 @@
 			<explosionRadius>1.9</explosionRadius >
 			<damageAmountBase>25</damageAmountBase>
 			<explosionDelay>10800</explosionDelay> <!-- 3 minutes -->
+			<useGraphicClass>True</useGraphicClass>
 		</projectile>
 		<comps>
 			<li Class="CompProperties_RemoteExplosive">
